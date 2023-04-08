@@ -6,10 +6,6 @@ public class TP {
 
 	private Map<String, String> tablaPaginas = new HashMap<String, String>();
 
-	private Long time_carga = (long) 0;
-
-	private Long time_direcc = (long) 0;
-
     private Integer fallos = 0;
 
 	private Integer cupos = 0;
