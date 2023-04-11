@@ -21,27 +21,21 @@ public class TP {
 		this.aa = aaa;
 	}
 
+	public Integer getEntradas(){
+		return Entradas;
+	}
+
 	public Map<String, String> getTablaPaginas() {
 		return tablaPaginas;
 	}
 
-	public Long get_carga(){
-		return time_carga;
-	}
-
-	public Long get_direc(){
-		return time_direcc;
-	}
 
 	public void consultarReferencia(String referencia) {
 
 		// caso en que no ente en la tp
 		if (tablaPaginas.containsValue(referencia)) {
-			time_direcc+=30;
-			time_carga+=30;
+
 		} else {
-			time_direcc+=30;
-			time_carga+=2000;
 			fallos = fallos + 1;
 		}
 		if (tablaPaginas.size() < Entradas) { /** Meter referencia si la TP no está llena */

@@ -1,12 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Queue;
 
 public class LRU {
 	
 	private Map<String, Integer> registro = new HashMap<>();
 	 
-	public ThreadAlgoritmo() {
+	public LRU() {
 				
 			}
 	
@@ -30,8 +29,12 @@ public class LRU {
 		 }
 		 
 		 if (!registro.containsKey(marcoPagina)) {
-			 AgregarNuevoRegistro(marcoPagina);
-			 System.out.println("No existe  ----  clave=" + marcoPagina + ", valor=" + 128);
+            if (getRegistro().size() == tablaPaginas.getEntradas()){
+                aplicarAlgoritmo(tp, marcoPagina);
+            } else {
+                AgregarNuevoRegistro(marcoPagina);
+                System.out.println("No existe  ----  clave=" + marcoPagina + ", valor=" + 128);
+            }
 			}
 		 
 		 else {
