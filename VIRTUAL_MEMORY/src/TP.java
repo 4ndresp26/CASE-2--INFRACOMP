@@ -6,13 +6,13 @@ public class TP {
 
 	private Map<String, String> tablaPaginas = new HashMap<String, String>();
 
-    private Integer fallos = 0;
-
-	private Integer cupos = 0;
-
 	private Integer Entradas;
 
 	private LRU aa;
+
+	private Integer fallos = 0;
+
+	private Integer cupos = 0;
 
 	public TP(Map<String, String> tabla, int tamaño, LRU aaa) {
 
@@ -35,27 +35,25 @@ public class TP {
 
 	public void consultarReferencia(String referencia) {
 
-		// casos si esta o no en la TP
+		// caso en que no ente en la tp
 		if (tablaPaginas.containsValue(referencia)) {
-			time_direcc+=0;
-			time_carga+=0;
+			time_direcc+=30;
+			time_carga+=30;
 		} else {
-			time_direcc+=0;
-			time_carga+=0;
+			time_direcc+=30;
+			time_carga+=2000;
 			fallos = fallos + 1;
-            if (tablaPaginas.size() < Entradas) { 
-                //Meter referencia si la TP no está llena */
-                tablaPaginas.put(cupos.toString(), referencia);
-                cupos++;
-                System.out.println("Agrego"+tablaPaginas+referencia+"fallo numero:" + fallos);
-            } else {
-                // Eliminar la referencía antigua y sustituirla por la nueva
-                String referenciaAntigua = aa.aplicarAlgoritmo(tablaPaginas, referencia);
-                tablaPaginas.replace(referenciaAntigua, referencia);
-                System.out.println("CAmbio"+tablaPaginas+referencia+"fallo numero:" + fallos);
-            }
 		}
-		
+		if (tablaPaginas.size() < Entradas) { /** Meter referencia si la TP no está llena */
+			tablaPaginas.put(cupos.toString(), referencia);
+			cupos++;
+			System.out.println("Agrego"+tablaPaginas+referencia+"fallo numero:" + fallos);
+		} else {
+			/** Eliminar la referencía antigua y sustituirla si esta llena la TP */
+			String referenciaAntigua = aa.aplicarAlgoritmo(tablaPaginas, referencia);
+			tablaPaginas.replace(referenciaAntigua, referencia);
+			System.out.println("CAmbio"+tablaPaginas+referencia+"fallo numero:" + fallos);
+		}
 	}
 
 }

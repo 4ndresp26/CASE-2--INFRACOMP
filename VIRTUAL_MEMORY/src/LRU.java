@@ -1,41 +1,63 @@
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 
-public class LRU{
+public class LRU {
 	
-    private Queue<String> registro = new LinkedList<String>();
-    private int tamaño;
-
-    public LRU(int tamaño) {
-        this.tamaño = tamaño;
-    }
-
-    public Queue getRegistro() {
+	private Map<String, Integer> registro = new HashMap<>();
+	 
+	public ThreadAlgoritmo() {
+				
+			}
+	
+	public Map<String, Integer> getRegistro() {
         return registro;
     }
+	
+	private void AgregarNuevoRegistro(String marcoPagina) {
+		registro.put(marcoPagina, 128);
+	}
 
-    private void AgregarNuevoRegistro(String marcoPagina) {
-        registro.add(marcoPagina);
-    }
+	public void ActualizarRegistro(TP tablaPaginas, String marcoPagina) {
 
-    private void EliminarRegistro() {
-        registro.remove();
-    }
+		 Map<String, String> tp = tablaPaginas.getTablaPaginas();
+		 int nuevoNumero;
+		 
+		 for (Map.Entry<String, Integer> entry : registro.entrySet()) {
+			 	nuevoNumero = registro.get(entry.getKey()) >> 1;
+			    registro.replace(entry.getKey(), nuevoNumero);
+			    System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue());
+		 }
+		 
+		 if (!registro.containsKey(marcoPagina)) {
+			 AgregarNuevoRegistro(marcoPagina);
+			 System.out.println("No existe  ----  clave=" + marcoPagina + ", valor=" + 128);
+			}
+		 
+		 else {
+				    nuevoNumero = registro.get(marcoPagina) + 128;
+				    registro.replace(marcoPagina, nuevoNumero);
+				    System.out.println("Ya exitia ----   clave=" + marcoPagina + ", valor=" + nuevoNumero);
+				    nuevoNumero = 0;
+				}
+	}
+	
+	public String aplicarAlgoritmo(Map<String, String> map, String referencia) {
+		
+		int menor = 255;
+		String llaveMenor = "";
+		
+		for (Map.Entry<String, Integer> entry : registro.entrySet()) {
+		    if(entry.getValue() <= menor ) {
+		    	menor = entry.getValue();
+		    	llaveMenor = entry.getKey();
+		    	//System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue());
+		    }
+		}
+		 System.out.println(llaveMenor);
+		 registro.replace(llaveMenor, 128); 
+		 return llaveMenor;
 
-    public void ActualizarRegistro( String marcoPagina) {
-        if (registro.size() < tamaño) {
-            registro.add(marcoPagina);
-        } else {
-            if (!registro.contains(marcoPagina)) {
-                EliminarRegistro();
-                AgregarNuevoRegistro(marcoPagina);
-                //System.out.println("clave=" + marcoPagina + ", valor=" + );
-            }
-            else {
-                registro.remove(marcoPagina);
-                registro.add(marcoPagina);              
-            }
-        }
-        
-    }
+	}
+
 }
